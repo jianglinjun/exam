@@ -9,7 +9,6 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.CorrectionInfo;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -103,8 +102,8 @@ public class ChartView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.save();
-        canvas.drawPath(getYLine(), getYPaint());
-        canvas.drawPath(getXLine(), getYPaint());
+        canvas.drawPath(getYLine(), getPaint());
+        canvas.drawPath(getXLine(), getPaint());
         drawXMark(canvas);
         drawYMark(canvas);
         canvas.restore();
@@ -124,10 +123,10 @@ public class ChartView extends View {
         }
     }
 
-    private Paint getYPaint(){
+    private Paint getPaint(){
         basePaint.setStyle(Paint.Style.STROKE);
-        basePaint.setStrokeWidth(2);
-        basePaint.setColor(Color.BLUE);
+        basePaint.setStrokeWidth(1);
+        basePaint.setColor(Color.BLACK);
 
         return basePaint;
     }
@@ -150,6 +149,7 @@ public class ChartView extends View {
 
     private void drawXMark(Canvas canvas){
         basePaint.reset();
+        basePaint.setAntiAlias(true);
         basePaint.setStrokeWidth(1);
         basePaint.setTextSize(getTextSize());
         basePaint.setTextAlign(Paint.Align.CENTER);
@@ -162,7 +162,7 @@ public class ChartView extends View {
         for(int i = 0 ; i < entity.getRecords().size() ; i++){
             basePaint.setColor(Color.BLACK);
             basePaint.setStyle(Paint.Style.FILL);
-            basePaint.setStrokeWidth(1);
+            basePaint.setStrokeWidth(2);
 
             Data data = entity.getRecords().get(i);
             String text = data.getYear();
@@ -206,16 +206,28 @@ public class ChartView extends View {
         int yAxisSpace = y_length / markSize;
 
         basePaint.reset();
-        basePaint.setStrokeWidth(1);
+        basePaint.setAntiAlias(true);
         basePaint.setColor(Color.BLACK);
         basePaint.setTextSize(getTextSize());
         basePaint.setTextAlign(Paint.Align.RIGHT);
         float offset_textHeight = (basePaint.ascent() + basePaint.descent()) / 2;
 
+        Path tempPath = new Path();
+        Paint tempPaint = new Paint();
+        tempPaint.setAntiAlias(true);
+        tempPaint.setStrokeWidth(1);
+        tempPaint.setStyle(Paint.Style.STROKE);
+        tempPaint.setColor(Color.LTGRAY);
+
         for(int i = 0 ; i <= markSize ; i++){
             String text = (i * SPACE_VALUE_Y) + "";
             float y_point = zero_point_y - i * yAxisSpace - offset_textHeight;
             canvas.drawText(text, zero_point_x - 10, y_point, basePaint);
+
+            tempPath.reset();
+            tempPath.moveTo(zero_point_x, y_point + offset_textHeight);
+            tempPath.lineTo(max_point_x, y_point + offset_textHeight);
+            canvas.drawPath(tempPath, tempPaint);
         }
     }
 
