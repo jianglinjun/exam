@@ -70,6 +70,7 @@ public class MainActivity extends Activity {
                 int i = 0;
                 toast("success");
                 fillData(resultEntity);
+                onEnd();
             }
 
             @Override
