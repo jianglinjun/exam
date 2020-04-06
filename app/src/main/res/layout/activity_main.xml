@@ -8,11 +8,15 @@
         android:id="@+id/temp01"
         android:layout_width="match_parent"
         android:layout_height="350dp">
-        <com.jlj.exam.view.ChartView
-            android:id="@+id/chartView"
-            android:background="#dddddd"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <com.jlj.exam.view.ChartView
+                android:id="@+id/chartView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
     </HorizontalScrollView>
 
 

@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.jlj.exam.entity.Data;
 import com.jlj.exam.entity.ResultEntity;
 import com.jlj.exam.http.Http;
 import com.jlj.exam.http.HttpCallback;
@@ -23,6 +24,7 @@ public class MainActivity extends Activity {
 
         chartView = findViewById(R.id.chartView);
         loading = findViewById(R.id.loading);
+        loading.setOnClickListener(null);
 
         findViewById(R.id.load).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,7 +35,12 @@ public class MainActivity extends Activity {
     }
 
     private void fillData(ResultEntity resultEntity){
-        chartView.fill(resultEntity);
+        chartView.fill(resultEntity, new ChartView.ClickCallback() {
+            @Override
+            public void onClicked(Data data) {
+                toast(data.getYear() + " drop!");
+            }
+        });
     }
 
     private void loading(boolean isShow){
@@ -62,6 +69,7 @@ public class MainActivity extends Activity {
             public void onSuccess(ResultEntity resultEntity) {
                 int i = 0;
                 toast("success");
+                fillData(resultEntity);
             }
 
             @Override
