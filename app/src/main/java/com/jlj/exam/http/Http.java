@@ -147,32 +147,8 @@ public class Http {
         return (Class<?>) types[0];
     }
 
-    private <T>void tt(Class<T> cls, List<Record> records){
-        try {
-            T obj = cls.newInstance();
-            Field[] fields = obj.getClass().getDeclaredFields();
-            if(fields != null && fields.length > 0){
-                for(int i = 0 ; i < fields.length ; i++){
-                    Field field = fields[i];
-                    if(field.getType().getSimpleName().equalsIgnoreCase("List")){
-                        field.getType().newInstance();
-
-                        Type[] type = ((ParameterizedType)field.getGenericType()).getActualTypeArguments();
-                        for(Record record : records){
-                            copyAttr(record, ((Class)type[0]));
-                        }
-                        continue;
-                    }
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public static void main(String[] args) {
 
     }
-
-    private <T> void copyAttr(Record source, Class<T> target){
-            int i = 0;
-        }
 
 }
