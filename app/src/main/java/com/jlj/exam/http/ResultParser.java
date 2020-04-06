@@ -55,9 +55,6 @@ class ResultParser {
                 dropYearSet.add(quarter[0]);
             }
 
-            maxValue = maxValue < record.getVolume_of_mobile_data() ? record.getVolume_of_mobile_data() : maxValue;
-            minValue = minValue > record.getVolume_of_mobile_data() ? record.getVolume_of_mobile_data() : minValue;
-
             lastValue = record.getVolume_of_mobile_data();
         }
 
@@ -69,6 +66,10 @@ class ResultParser {
             record.setYear(key);
             record.setVolume_of_mobile_data(map.get(key));
             record.setDrop(dropYearSet.contains(key));
+
+            //计算最大值和最小值
+            maxValue = maxValue < record.getVolume_of_mobile_data() ? record.getVolume_of_mobile_data() : maxValue;
+            minValue = minValue > record.getVolume_of_mobile_data() ? record.getVolume_of_mobile_data() : minValue;
 
             list.add(record);
         }

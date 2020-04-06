@@ -71,9 +71,6 @@ public class Http {
 
             if(code >= 200 && code < 300){
                 String jsonStr = getString(connection.getInputStream());
-                System.out.println("===================");
-                System.out.println(jsonStr);
-                System.out.println("===================");
                 if(jsonStr != null && !jsonStr.equalsIgnoreCase("")){
                     //缓存最新的数据
                     CacheUtils.save(context, url, jsonStr);
